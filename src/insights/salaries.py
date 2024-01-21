@@ -7,7 +7,14 @@ class ProcessSalaries(ProcessJobs):
         super().__init__()
 
     def get_max_salary(self) -> int:
-        pass
+        max_salary = 0
+        for job in self.jobs_list:
+            salary = job.get("max_salary")
+            # isdigit() verifica se contem apenas digitos
+            if salary is not None and salary.strip() and salary.isdigit():
+                salary_int = int(salary)
+                max_salary = max(max_salary, salary_int)
+        return max_salary
 
     def get_min_salary(self) -> int:
         pass
