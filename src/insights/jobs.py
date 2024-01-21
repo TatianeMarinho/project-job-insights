@@ -26,5 +26,24 @@ class ProcessJobs:
         #   converte o conjunto em uma lista e a retorna
         return list(unique_job_types)
 
-    def filter_by_multiple_criteria(self) -> List[dict]:
-        pass
+    def filter_by_multiple_criteria(self, list_jobs: List[Dict],
+                                    filter_criteria: Dict) -> List[dict]:
+        #  verifica se o filtro fornecido e um dicionario
+        if not isinstance(filter_criteria, dict):
+            #  se nao for levanta um erro
+            raise TypeError('O filtro fornecido deve ser um dicionario')
+        #  cria uma lista vazia para armazenar os trabalhos filtrados
+        filtered_jobs = []
+        #  iterar sobre os trabalhos na lista de trabalhos
+        for job in list_jobs:
+            #  verifica se o trabalho atende a todos os criterios de filtro
+            match_all_criteria = all(
+                #  p/cada chave, o valor e igual ao valor do criterio de filtro
+                job.get(key) == value for key, value in filter_criteria
+                .items())
+            #  se o trabalho atender a todos os criterios de filtro
+            if match_all_criteria:
+                #  adiciona o trabalho a lista de trabalhos filtrados
+                filtered_jobs.append(job)
+        #  retorna a lista de trabalhos filtrados
+        return filtered_jobs
